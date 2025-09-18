@@ -1,0 +1,16 @@
+package calc;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class TrapezoidMethodTest {
+
+    @Test
+    void trapezoid_n16_polynomial_is_about_116_over_3() {
+        // f(x) = x^3 + 2x^2 - 8x - 1, ∫_0^4 f(x) dx = 116/3 ≈ 38.6666666667
+        CalculatedFunction f = new Polynomial(1, 2, -8, -1);
+        Integral I = new TrapezoidMethod(f, 0, 4, 16);
+        double result = I.calculate();
+        assertEquals(38.6666666667, result, 0.2); // tolerancja dla metody trapezów
+    }
+}
