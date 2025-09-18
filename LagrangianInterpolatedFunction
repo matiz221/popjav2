@@ -1,0 +1,56 @@
+package calc;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
+public class LagrangianInterpolatedFunction implements CalculatedFunction {
+    private final double[] x;
+    private final double[] y;
+
+    private LagrangianInterpolatedFunction(double[] x, double[] y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public static LagrangianInterpolatedFunction createFromCsv(String file) throws IOException {
+        return createFromCsv(Path.of(file), ",");
+    }
+
+    public static LagrangianInterpolatedFunction createFromCsv(Path path, String delimiter) throws IOException {
+        List<String> lines = Files.readAllLines(path);
+        List<Double> xs = new ArrayList<>();
+        List<Double> ys = new ArrayList<>();
+        String splitRegex = Pattern.quote(delimiter);
+
+        for (String line : lines) {
+            if (line == null) continue;
+            line = line.trim();
+            if (line.isEmpty()) continue;
+
+            String[] parts = line.split(splitRegex);
+            if (parts.length < 2) continue;
+
+            double xi = Double.parseDouble(parts[0].trim());
+            double yi = Double.parseDouble(parts[1].trim());
+            xs.add(xi);
+            ys.add(yi);
+        }
+
+        double[] xa = new double[xs.size()];
+        double[] ya = new double[ys.size()];
+        for (int i = 0; i < xs.size(); i++) {
+            xa[i] = xs.get(i);
+            ya[i] = ys.get(i);
+        }
+        return new LagrangianInterpolatedFunction(xa, ya);
+    }
+
+    @Override
+    public double f(double t) {
+        return LagrangianInterpolation.interpolate(x, y, t);
+    }
+}
