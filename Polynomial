@@ -1,0 +1,20 @@
+package calc;
+
+public class Polynomial implements CalculatedFunction {
+    // współczynniki od najwyższej potęgi do wyrazu wolnego
+    private final double[] coeffs;
+
+    public Polynomial(double... coeffs) {
+        this.coeffs = coeffs.clone();
+    }
+
+    @Override
+    public double f(double x) {
+        // Schemat Hornera
+        double res = 0.0;
+        for (double c : coeffs) {
+            res = res * x + c;
+        }
+        return res;
+    }
+}
