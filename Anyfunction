@@ -1,0 +1,16 @@
+package calc;
+
+import java.util.function.DoubleUnaryOperator;
+
+public class AnyFunction implements CalculatedFunction {
+    private final DoubleUnaryOperator fn;
+
+    public AnyFunction(DoubleUnaryOperator fn) {
+        this.fn = fn;
+    }
+
+    @Override
+    public double f(double x) {
+        return fn.applyAsDouble(x);
+    }
+}
