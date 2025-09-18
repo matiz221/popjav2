@@ -1,0 +1,6 @@
+package calc;
+
+@FunctionalInterface
+public interface CalculatedFunction {
+    double f(double x);
+}
