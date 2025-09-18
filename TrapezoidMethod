@@ -1,0 +1,22 @@
+package calc;
+
+public class TrapezoidMethod extends Integral {
+    private final int n; // liczba trapezów
+
+    public TrapezoidMethod(CalculatedFunction function, double lower, double upper, int n) {
+        super(function, lower, upper);
+        if (n <= 0) throw new IllegalArgumentException("n must be > 0");
+        this.n = n;
+    }
+
+    @Override
+    public double calculate() {
+        double h = (upper - lower) / n;
+        double sum = 0.5 * function.f(lower) + 0.5 * function.f(upper);
+        for (int i = 1; i < n; i++) {
+            double x = lower + i * h;
+            sum += function.f(x);
+        }
+        return h * sum;
+    }
+}
