@@ -1,0 +1,15 @@
+package calc;
+
+public abstract class Integral {
+    protected final CalculatedFunction function;
+    protected final double lower;
+    protected final double upper;
+
+    public Integral(CalculatedFunction function, double lower, double upper) {
+        this.function = function;
+        this.lower = lower;
+        this.upper = upper;
+    }
+
+    public abstract double calculate();
+}
